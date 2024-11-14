@@ -97,6 +97,18 @@ func (p *Printer) Font(font Font) error {
 	return p.write(fmt.Sprintf("\x1BM%c", font))
 }
 
+// From C# source that 1B G1 is enable bold
+// and 1B G0 is disable bold
+func (p *Printer) EnableBold() error {
+	return p.write(fmt.Sprintf("\x1BG%c", 1))
+}
+
+func (p *Printer) DisableBold() error {
+	return p.write(fmt.Sprintf("\x1BG%c", 0))
+}
+
+
+
 // Underline will enable or disable underlined text
 func (p *Printer) Underline(enabled bool) error {
 	if enabled {
