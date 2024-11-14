@@ -58,6 +58,14 @@ func (p *Printer) write(cmd string) error {
 	return err
 }
 
+func (p *Printer) Write(cmd string) error {
+	if p.f != nil {
+		p.f.SetWriteDeadline(time.Now().Add(10 * time.Second))
+	}
+	_, err := p.s.Write([]byte(cmd))
+	return err
+}
+
 // AztecViaImage prints an Aztec code using the image system for longer data that is not possible to print directly
 func (p *Printer) AztecViaImage(data string, width, height int) error {
 	if height < 1 {
